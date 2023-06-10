@@ -4,9 +4,18 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import LoginScreen from "./components/LoginScreen";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Layout } from "./components/Layout";
+import HomeScreen from "./components/HomeScreen";
 
 const queryClient = new QueryClient();
-const router = createBrowserRouter([{ path: "/", element: <LoginScreen /> }]);
+const router = createBrowserRouter([
+  { path: "/", element: <LoginScreen /> },
+  {
+    path: "/",
+    element: <Layout />,
+    children: [{ path: "home", element: <HomeScreen /> }],
+  },
+]);
 
 function App() {
   return (

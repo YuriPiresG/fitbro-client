@@ -1,16 +1,15 @@
 import {
-  Button,
-  Center,
-  Image,
-  PasswordInput,
-  Stack,
-  TextInput,
+    Button,
+    Center,
+    Image,
+    PasswordInput,
+    Stack,
+    TextInput,
 } from "@mantine/core";
-import { toast } from "react-toastify";
 import { useForm, zodResolver } from "@mantine/form";
 import { z } from "zod";
-import { useLogin } from "../hooks/useLogin";
 import logo from "../assets/logo.png";
+import { useLogin } from "../hooks/useLogin";
 
 const loginScheme = z.object({
   username: z.string().nonempty({ message: "Username não pode estar vazio" }),
