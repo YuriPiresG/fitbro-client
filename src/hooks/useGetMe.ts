@@ -6,7 +6,7 @@ export interface User {
   name: string;
 }
 
-export const useUser = () => {
+export const useGetMe = () => {
   const accessToken = localStorage.getItem("access_token");
   const response = useQuery({
     queryKey: ["me"],
@@ -14,7 +14,7 @@ export const useUser = () => {
       const response = await api.get<User>("/users/me");
       return response.data;
     },
-    enabled: !!accessToken,
   });
+  console.log(accessToken);
   return response.data;
 };

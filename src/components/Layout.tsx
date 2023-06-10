@@ -10,10 +10,10 @@ import {
 import { Link, Outlet } from "react-router-dom";
 import { useHome } from "../hooks/useHome";
 import { useLogout } from "../hooks/useLogout";
-import { useUser } from "../hooks/useUser";
+import { useGetMe } from "../hooks/useGetMe";
 
 export const Layout = () => {
-  const user = useUser();
+  const user = useGetMe();
   const logout = useLogout();
   const home = useHome();
   const handleLogout = () => {
@@ -42,7 +42,7 @@ export const Layout = () => {
             style={{ display: "flex", alignItems: "center" }}
           >
             <Text weight={400} size="xl">
-              <span>Olá, {user?.username}</span>
+              <span>Olá, {user?.name}</span>
             </Text>
             <div style={{ marginLeft: "auto" }}>
               <Link to="/home">
@@ -60,6 +60,14 @@ export const Layout = () => {
                   Dieta
                 </Button>
               </Link>
+              <Link to="/measurements">
+                <Button variant="subtle" size="sm">
+                  Medidas
+                </Button>
+              </Link>
+              <Button variant="subtle" size="sm" onClick={handleLogout}>
+                Logout
+              </Button>
             </div>
           </Header>
         }

@@ -1,6 +1,10 @@
 import homeLogo from "../assets/homeLogo.svg";
-import { Image, Paper, Text } from "@mantine/core";
+import { Image, Paper } from "@mantine/core";
+import { useGetMe } from "../hooks/useGetMe";
+
 function HomeScreen() {
+  const user = useGetMe();
+  console.log(user);
   return (
     <div
       style={{
@@ -16,16 +20,18 @@ function HomeScreen() {
         p="xl"
         style={{
           marginLeft: "1rem",
-          marginTop: "10rem"}}
+          marginTop: "10rem",
+        }}
       >
         <h1
           style={{
-            fontSize: 80,
+            fontSize: 60,
             alignSelf: "end",
           }}
         >
-          Bem vindo ao FitBro! Uma plataforma para te ajudar a acompanhar a sua
-          evolução.
+          Bem vindo ao FitBro {user?.name}! Uma plataforma para te ajudar a
+          acompanhar a sua evolução. Comece montando seus treinos na aba
+          "Treinos"
         </h1>
       </Paper>
     </div>
