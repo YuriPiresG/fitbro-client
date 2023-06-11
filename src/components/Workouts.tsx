@@ -9,16 +9,10 @@ import {
   Text,
 } from "@mantine/core";
 import workoutLogo from "../assets/workoutLogo.svg";
-import { useGetWorkouts } from "../hooks/useGetWorkouts";
+import { useGetMe } from "../hooks/useGetMe";
+import { Workout, useGetWorkouts } from "../hooks/useGetWorkouts";
+import GetWorkout from "./GetWorkout";
 import CreateWorkout from "./buttons/CreateWorkout";
-import { User, useGetMe } from "../hooks/useGetMe";
-
-interface Workout {
-  id: number;
-  name: string;
-  description?: string;
-  user: User;
-}
 
 function Workouts() {
   const { data: workouts, isLoading } = useGetWorkouts();
@@ -55,16 +49,8 @@ function Workouts() {
               <Text size="sm" color="dimmed">
                 {workout?.description}
               </Text>
-
-              <Button
-                variant="light"
-                color="blue"
-                fullWidth
-                mt="md"
-                radius="md"
-              >
-                Ver treino
-              </Button>
+              <br />
+              <GetWorkout user={user!} workout={workout} />
             </Card>
           ))}
         </Grid>

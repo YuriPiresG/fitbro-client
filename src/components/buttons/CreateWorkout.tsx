@@ -2,17 +2,16 @@ import {
   Button,
   Group,
   Modal,
-  NumberInput,
   Stack,
-  TextInput,
+  TextInput
 } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
+import { TfiPlus } from "react-icons/tfi";
 import { toast } from "react-toastify";
 import { z } from "zod";
 import { useCreateWorkout } from "../../hooks/useCreateWorkout";
 import { User } from "../../hooks/useGetMe";
-import { TfiPlus } from "react-icons/tfi";
 
 const createWorkoutSchema = z.object({
   name: z.string().min(3, { message: "Nome muito curto" }),

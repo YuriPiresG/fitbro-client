@@ -1,21 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../lib/api";
-import { User } from "./useGetMe";
-import { Exercise } from "./useGetExercises";
 
-export interface Workout {
+export interface Exercise {
   id: number;
   name: string;
-  description?: string;
-  user: User;
-  exercises: Exercise[];
+  repetitions: number;
+  series: number;
+  weight: number;
 }
 
 export const useGetWorkouts = () => {
   return useQuery({
-    queryKey: ["workouts"],
+    queryKey: ["exercises"],
     queryFn: async () => {
-      const response = await api.get<Workout[]>(`/workout`);
+      const response = await api.get<Exercise[]>(`/exercise`);
       console.log(response.data);
       return response.data;
     },
