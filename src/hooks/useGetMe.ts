@@ -3,11 +3,11 @@ import { api } from "../lib/api";
 
 export interface User {
   id: number;
-  name: string;
+  username: string;
 }
 
 export const useGetMe = () => {
-  const accessToken = localStorage.getItem("access_token");
+  localStorage.getItem("access_token");
   const response = useQuery({
     queryKey: ["me"],
     queryFn: async () => {
@@ -15,6 +15,5 @@ export const useGetMe = () => {
       return response.data;
     },
   });
-  console.log(accessToken);
   return response.data;
 };

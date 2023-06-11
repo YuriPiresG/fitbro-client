@@ -29,7 +29,7 @@ function HomeScreen() {
             alignSelf: "end",
           }}
         >
-          Bem vindo ao FitBro {user?.name}! Uma plataforma para te ajudar a
+          Bem vindo ao FitBro {user?.username}! Uma plataforma para te ajudar a
           acompanhar a sua evolução. Comece montando seus treinos na aba
           "Treinos"
         </h1>

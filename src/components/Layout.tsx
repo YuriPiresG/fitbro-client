@@ -42,7 +42,7 @@ export const Layout = () => {
             style={{ display: "flex", alignItems: "center" }}
           >
             <Text weight={400} size="xl">
-              <span>Olá, {user?.name}</span>
+              <span>Olá, {user?.username}</span>
             </Text>
             <div style={{ marginLeft: "auto" }}>
               <Link to="/home">

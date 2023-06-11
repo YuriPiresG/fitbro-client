@@ -1,7 +1,17 @@
-import { Table, Skeleton, Image, Paper } from "@mantine/core";
-import { useGetWorkouts } from "../hooks/useGetWorkouts";
-import { User, useGetMe } from "../hooks/useGetMe";
+import {
+  Badge,
+  Button,
+  Card,
+  Grid,
+  Group,
+  Image,
+  Skeleton,
+  Text,
+} from "@mantine/core";
 import workoutLogo from "../assets/workoutLogo.svg";
+import { useGetWorkouts } from "../hooks/useGetWorkouts";
+import CreateWorkout from "./buttons/CreateWorkout";
+import { User, useGetMe } from "../hooks/useGetMe";
 
 interface Workout {
   id: number;
@@ -11,33 +21,53 @@ interface Workout {
 }
 
 function Workouts() {
-  const user = useGetMe();
   const { data: workouts, isLoading } = useGetWorkouts();
-
+  const user = useGetMe();
+  const filteredWorkouts = workouts?.filter(
+    (workout: Workout) => workout.user.id === user?.id
+  );
+  console.log(filteredWorkouts);
+  console.log(user);
   return (
     <>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <h1 style={{ fontSize: 100, height: "0px" }}>Treinos</h1>
-
         <Image src={workoutLogo} alt="Logo" width={800} />
       </div>
       <Skeleton visible={isLoading}>
-        <Table verticalSpacing="xs" fontSize="md">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Descrição</th>
-            </tr>
-          </thead>
-          <tbody>
-            {workouts?.map((workout: Workout) => (
-              <tr>
-                <td>{workout.name}</td>
-                <td>{workout.description}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <CreateWorkout user={user!} open={false} />
+        <Grid justify="center">
+          {filteredWorkouts?.map((workout: Workout) => (
+            <Card
+              shadow="sm"
+              padding="lg"
+              radius="md"
+              withBorder
+              style={{ width: "13rem" }}
+            >
+              <Group position="apart" mt="md" mb="xs">
+                <Text weight={500}>{workout?.name}</Text>
+                <Badge color="pink" variant="light">
+                  On Sale
+                </Badge>
+              </Group>
+
+              <Text size="sm" color="dimmed">
+                {workout?.description}
+              </Text>
+
+              <Button
+                variant="light"
+                color="blue"
+                fullWidth
+                mt="md"
+                radius="md"
+              >
+                Ver treino
+              </Button>
+            </Card>
+          ))}
+        </Grid>
       </Skeleton>
     </>
   );
