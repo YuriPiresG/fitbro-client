@@ -1,4 +1,12 @@
-import { Button, Group, Modal, MultiSelect, Select, Stack, TextInput } from "@mantine/core";
+import {
+  Button,
+  Group,
+  Modal,
+  MultiSelect,
+  Select,
+  Stack,
+  TextInput,
+} from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { TfiPlus } from "react-icons/tfi";
@@ -9,10 +17,10 @@ import { User } from "../../hooks/useGetMe";
 import { useGetExercises } from "../../hooks/useGetExercises";
 
 const createWorkoutSchema = z.object({
-  name: z.string().min(3, { message: "Nome muito curto" }),
+  name: z.string(),
   description: z.string().optional(),
   userId: z.number(),
-  exercisesId: z.array(z.number()),
+  exercisesId: z.array(z.string()),
 });
 
 type CreateWorkoutSchema = z.infer<typeof createWorkoutSchema>;
@@ -25,25 +33,29 @@ interface Props {
 function CreateWorkout(props: Props) {
   const [opened, { open, close }] = useDisclosure(false);
   const exercisesQuery = useGetExercises();
+  const exercises = exercisesQuery.data ?? [];
 
   const { mutateAsync, isLoading } = useCreateWorkout();
-  const handleSubmit = async (workoutForm: CreateWorkoutSchema) => {
-    const formValues: CreateWorkoutSchema = {
-      ...workoutForm,
-    };
-    await mutateAsync(formValues);
-    toast.success("Treino criado com sucesso!");
-    close();
-  };
   const form = useForm<CreateWorkoutSchema>({
     initialValues: {
       name: "",
       description: "",
       userId: props.user?.id,
-      exercisesId: [],
+      exercisesId: [""],
     },
     validate: zodResolver(createWorkoutSchema),
   });
+  const handleSubmit = async (workoutForm: CreateWorkoutSchema) => {
+    const formValues: CreateWorkoutSchema = {
+      name: workoutForm.name,
+      description: workoutForm.description,
+      userId: workoutForm.userId,
+      exercisesId: workoutForm.exercisesId,
+    };
+    await mutateAsync(formValues);
+    toast.success("Treino criado com sucesso!");
+    handleClose();
+  };
 
   const handleClose = () => {
     form.reset();
@@ -55,9 +67,7 @@ function CreateWorkout(props: Props) {
       <Modal opened={opened} onClose={handleClose} title="Criar um treino">
         <Modal.Body>
           <form
-            onSubmit={form.onSubmit((createWorkoutForm) =>
-              handleSubmit(createWorkoutForm)
-            )}
+            onSubmit={form.onSubmit((workoutForm) => handleSubmit(workoutForm))}
           >
             <Stack spacing="xs">
               <TextInput
@@ -75,13 +85,13 @@ function CreateWorkout(props: Props) {
               <MultiSelect
                 label="Exercícios"
                 placeholder="Selecione os exercícios"
-                multiple
-                data={
-                  exercisesQuery.data?.map((exercise) => ({
-                    value: exercise.id.toString(),
-                    label: exercise.name,
-                  })) || []
-                }
+                data={exercises.map((exercise) => ({
+                  value: exercise.id.toString(),
+                  label: exercise.name,
+                }))}
+                required
+                maxDropdownHeight={200}
+                searchable
                 {...form.getInputProps("exercisesId")}
               />
 

@@ -5,7 +5,7 @@ interface Workout {
   name: string;
   description?: string;
   userId: number | undefined;
-  exercisesId: number[];
+  exercisesId: string[];
 }
 
 export const useCreateWorkout = () => {
