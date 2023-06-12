@@ -1,20 +1,13 @@
 import {
-  Badge,
   Button,
-  Card,
-  Grid,
-  Group,
-  Image,
-  Skeleton,
-  Text,
   Drawer,
+  Group,
+  Text
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import workoutLogo from "../assets/workoutLogo.svg";
-import { Workout, useGetWorkouts } from "../hooks/useGetWorkouts";
-import CreateWorkout from "./buttons/CreateWorkout";
-import { User, useGetMe } from "../hooks/useGetMe";
 import { useState } from "react";
+import { User } from "../hooks/useGetMe";
+import { Workout } from "../hooks/useGetWorkouts";
 
 interface Exercise {
   id: number;
@@ -68,7 +61,7 @@ function GetWorkout(props: Props) {
         </Drawer.Body>
       </Drawer>
       <Group position="center">
-        <Button onClick={open}>Open drawer</Button>
+        <Button onClick={open}>Ver treino</Button>
       </Group>
     </>
   );

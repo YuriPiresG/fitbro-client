@@ -8,11 +8,11 @@ interface Workout {
   exercisesId: number[];
 }
 
-export const useCreateWorkout = () => {
+export const useUpdateWorkout = () => {
   useQueryClient();
   return useMutation({
     mutationFn: async (data: Workout) => {
-      await api.post("/workout", {
+      await api.put("/workout", {
         ...data,
         exercisesId: data.exercisesId.map((id) => +id),
       });

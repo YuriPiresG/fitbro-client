@@ -1,48 +1,57 @@
-import { Button, Group, Modal, MultiSelect, Select, Stack, TextInput } from "@mantine/core";
+import {
+  Button,
+  Group,
+  Modal,
+  MultiSelect,
+  Stack,
+  TextInput,
+} from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { TfiPlus } from "react-icons/tfi";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import { useCreateWorkout } from "../../hooks/useCreateWorkout";
-import { User } from "../../hooks/useGetMe";
 import { useGetExercises } from "../../hooks/useGetExercises";
+import { User } from "../../hooks/useGetMe";
+import { useUpdateWorkout } from "../../hooks/useUpdateWorkout";
+import { Workout } from "../../hooks/useGetWorkouts";
 
-const createWorkoutSchema = z.object({
+const updateWorkoutSchema = z.object({
   name: z.string().min(3, { message: "Nome muito curto" }),
   description: z.string().optional(),
   userId: z.number(),
   exercisesId: z.array(z.number()),
 });
 
-type CreateWorkoutSchema = z.infer<typeof createWorkoutSchema>;
+type UpdateWorkoutSchema = z.infer<typeof updateWorkoutSchema>;
 
 interface Props {
+  workout: Workout;
   user: User;
   open: boolean;
 }
 
-function CreateWorkout(props: Props) {
+function UpdateWorkout(props: Props) {
   const [opened, { open, close }] = useDisclosure(false);
   const exercisesQuery = useGetExercises();
 
-  const { mutateAsync, isLoading } = useCreateWorkout();
-  const handleSubmit = async (workoutForm: CreateWorkoutSchema) => {
-    const formValues: CreateWorkoutSchema = {
+  const { mutateAsync, isLoading } = useUpdateWorkout();
+  const handleSubmit = async (workoutForm: UpdateWorkoutSchema) => {
+    const formValues: UpdateWorkoutSchema = {
       ...workoutForm,
     };
     await mutateAsync(formValues);
-    toast.success("Treino criado com sucesso!");
+    toast.success("Treino atualizado com sucesso!");
     close();
   };
-  const form = useForm<CreateWorkoutSchema>({
+  const form = useForm<UpdateWorkoutSchema>({
     initialValues: {
-      name: "",
-      description: "",
+      name: props.workout.name || "",
+      description: props.workout.description || "",
       userId: props.user?.id,
       exercisesId: [],
     },
-    validate: zodResolver(createWorkoutSchema),
+    validate: zodResolver(updateWorkoutSchema),
   });
 
   const handleClose = () => {
@@ -52,7 +61,7 @@ function CreateWorkout(props: Props) {
 
   return (
     <>
-      <Modal opened={opened} onClose={handleClose} title="Criar um treino">
+      <Modal opened={opened} onClose={handleClose} title="Atualizar um treino">
         <Modal.Body>
           <form
             onSubmit={form.onSubmit((createWorkoutForm) =>
@@ -63,7 +72,7 @@ function CreateWorkout(props: Props) {
               <TextInput
                 label="Nome do treino"
                 type="text"
-                placeholder="Push"
+                placeholder=""
                 {...form.getInputProps("name")}
               />
               <TextInput
@@ -85,8 +94,8 @@ function CreateWorkout(props: Props) {
                 {...form.getInputProps("exercisesId")}
               />
 
-              <Button color="green" type="submit" loading={isLoading}>
-                Criar
+              <Button color="blue" type="submit" loading={isLoading}>
+                Atualizar
               </Button>
             </Stack>
           </form>
@@ -101,4 +110,4 @@ function CreateWorkout(props: Props) {
     </>
   );
 }
-export default CreateWorkout;
+export default UpdateWorkout;
