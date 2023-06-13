@@ -3,3 +3,17 @@
 h1, h3 {
   font-family: "Roboto Condensed", sans-serif;
 }
+
+.fade-in {
+  opacity: 0;
+  animation: fade-in-animation 0.5s forwards;
+}
+
+@keyframes fade-in-animation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

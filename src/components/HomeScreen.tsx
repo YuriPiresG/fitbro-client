@@ -7,6 +7,7 @@ function HomeScreen() {
   console.log(user);
   return (
     <div
+      className="fade-in"
       style={{
         display: "flex",
         justifyContent: "center",
