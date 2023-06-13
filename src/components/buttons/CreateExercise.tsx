@@ -15,10 +15,10 @@ import { Workout } from "../../hooks/workout/useGetWorkouts";
 import { useCreateExercise } from "../../hooks/exercise/useCreateExercise";
 
 const createExerciseSchema = z.object({
-  name: z.string(),
-  repetitions: z.number(),
-  series: z.number(),
-  weight: z.number(),
+  name: z.string().nonempty({ message: "Nome não pode estar vazio" }),
+  repetitions: z.number().gt(0, { message: "Repetições devem ser maiores que 0" }),
+  series: z.number().gt(0, { message: "Séries devem ser maiores que 0" }),
+  weight: z.number().gt(0, { message: "Peso deve ser maior que 0" }),
   workoutId: z.number(),
 });
 

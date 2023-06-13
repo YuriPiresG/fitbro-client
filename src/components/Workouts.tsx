@@ -113,7 +113,7 @@ function Workouts() {
             close={() => {
               setSelectedWorkoutToUpdate(null);
             }}
-            workout={selectedWorkoutToUpdate as any}
+            workout={selectedWorkoutToUpdate as Workout}
             user={user!}
           />
         )}
@@ -123,7 +123,7 @@ function Workouts() {
             close={() => {
               setSelectedWorkoutToDelete(null);
             }}
-            workout={selectedWorkoutToDelete as any}
+            workout={selectedWorkoutToDelete as Workout}
             user={user!}
           />
         )}
@@ -133,7 +133,7 @@ function Workouts() {
             close={() => {
               setSelectedWorkoutToView(null);
             }}
-            workout={selectedWorkoutToView as any}
+            workout={selectedWorkoutToView as Workout}
             user={user!}
           />
         )}

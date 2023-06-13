@@ -8,7 +8,7 @@ import { User } from "../../hooks/useGetMe";
 import { useCreateWorkout } from "../../hooks/workout/useCreateWorkout";
 
 const createWorkoutSchema = z.object({
-  name: z.string(),
+  name: z.string().nonempty({ message: "Nome não pode estar vazio" }),
   description: z.string().optional(),
   userId: z.number(),
   exercisesId: z.array(z.string()),
