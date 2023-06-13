@@ -13,12 +13,11 @@ export function useUpdateWorkout() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: UpdateWorkout) => {
-      const response = await api.put(`/workout/${data.id}`, {
+      await api.put(`/workout/${data.id}`, {
         ...data,
         exercisesId: data.exercisesId.map((id) => +id),
       });
       queryClient.refetchQueries(["workouts"]);
-      console.log(response);
     },
   });
 }

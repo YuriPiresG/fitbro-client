@@ -16,7 +16,6 @@ export const useGetWorkouts = () => {
     queryKey: ["workouts"],
     queryFn: async () => {
       const response = await api.get<Workout[]>(`/workout`);
-      console.log(response.data);
       return response.data;
     },
   });
