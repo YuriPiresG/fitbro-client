@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { api } from "../lib/api";
+import { api } from "../../lib/api";
 
 interface Workout {
   name: string;
   description?: string;
   userId: number | undefined;
-  exercisesId: number[];
+  exercisesId: string[];
 }
 
-export const useUpdateWorkout = () => {
+export const useCreateWorkout = () => {
   useQueryClient();
   return useMutation({
     mutationFn: async (data: Workout) => {
-      await api.put("/workout", {
+      await api.post("/workout", {
         ...data,
         exercisesId: data.exercisesId.map((id) => +id),
       });

@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "../lib/api";
-import { useGetMe } from "./useGetMe";
+import { api } from "../../lib/api";
 
 export interface Exercise {
   id: number;

@@ -12,9 +12,9 @@ import { useDisclosure } from "@mantine/hooks";
 import { TfiPlus } from "react-icons/tfi";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import { useCreateWorkout } from "../../hooks/useCreateWorkout";
+import { useCreateWorkout } from "../../hooks/workout/useCreateWorkout";
 import { User } from "../../hooks/useGetMe";
-import { useGetExercises } from "../../hooks/useGetExercises";
+import { useGetExercises } from "../../hooks/workout/useGetExercises";
 
 const createWorkoutSchema = z.object({
   name: z.string(),
