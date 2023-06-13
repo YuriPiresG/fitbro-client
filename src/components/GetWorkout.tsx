@@ -1,29 +1,18 @@
-import {
-  Button,
-  Drawer,
-  Group,
-  Text
-} from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { Button, Drawer, Text } from "@mantine/core";
 import { useState } from "react";
 import { User } from "../hooks/useGetMe";
-import { Workout } from "../hooks/useGetWorkouts";
-
-interface Exercise {
-  id: number;
-  name: string;
-  repetitions: number;
-  series: number;
-  weight: number;
-}
+import { Workout } from "../hooks/workout/useGetWorkouts";
+import { Exercise } from "../hooks/exercise/useGetExercises";
+import CreateExercise from "./buttons/CreateExercise";
 
 interface Props {
   user: User;
   workout: Workout;
+  open: boolean;
+  close: () => void;
 }
 
 function GetWorkout(props: Props) {
-  const [opened, { open, close }] = useDisclosure(false);
   const [checkedExercises, setCheckedExercises] = useState<number[]>([]);
   const toggleExercise = (exerciseId: number) => {
     if (checkedExercises.includes(exerciseId)) {
@@ -38,10 +27,15 @@ function GetWorkout(props: Props) {
   return (
     <>
       <Drawer
-        opened={opened}
-        onClose={close}
+        opened={props.open}
+        onClose={props.close}
         title={props.workout.name}
         overlayProps={{ opacity: 0.5, blur: 4 }}
+        transitionProps={{
+          transition: "rotate-left",
+          duration: 150,
+          timingFunction: "linear",
+        }}
       >
         <Drawer.Body>
           {props.workout.exercises.map((exercise: Exercise) => (
@@ -58,11 +52,9 @@ function GetWorkout(props: Props) {
               </Button>
             </Text>
           ))}
+          <CreateExercise workout={props.workout} open />
         </Drawer.Body>
       </Drawer>
-      <Group position="center">
-        <Button onClick={open}>Ver treino</Button>
-      </Group>
     </>
   );
 }

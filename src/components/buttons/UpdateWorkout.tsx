@@ -1,20 +1,10 @@
-import {
-  Button,
-  Group,
-  Modal,
-  MultiSelect,
-  Stack,
-  TextInput,
-} from "@mantine/core";
+import { Button, Modal, Stack, TextInput } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
-import { useDisclosure } from "@mantine/hooks";
-import { TfiPlus } from "react-icons/tfi";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import { useGetExercises } from "../../hooks/workout/useGetExercises";
 import { User } from "../../hooks/useGetMe";
+import { Workout } from "../../hooks/workout/useGetWorkouts";
 import { useUpdateWorkout } from "../../hooks/workout/useUpdateWorkout";
-import { Workout } from "../../hooks/useGetWorkouts";
 
 const updateWorkoutSchema = z.object({
   name: z.string().min(3, { message: "Nome muito curto" }),
@@ -33,9 +23,6 @@ interface Props {
 }
 
 function UpdateWorkout(props: Props) {
-  const exercisesQuery = useGetExercises();
-  const exercises = exercisesQuery.data ?? [];
-
   const { mutateAsync, isLoading } = useUpdateWorkout();
   const form = useForm<UpdateWorkoutSchema>({
     initialValues: {
@@ -87,18 +74,6 @@ function UpdateWorkout(props: Props) {
                 type="text"
                 placeholder="Treino de peito, ombro e tríceps"
                 {...form.getInputProps("description")}
-              />
-              <MultiSelect
-                label="Exercícios"
-                placeholder="Selecione os exercícios"
-                data={exercises.map((exercise) => ({
-                  value: exercise.id.toString(),
-                  label: exercise.name,
-                }))}
-                required
-                maxDropdownHeight={200}
-                searchable
-                {...form.getInputProps("exercisesId")}
               />
 
               <Button color="blue" type="submit" loading={isLoading}>

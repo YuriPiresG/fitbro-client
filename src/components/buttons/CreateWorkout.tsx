@@ -1,20 +1,11 @@
-import {
-  Button,
-  Group,
-  Modal,
-  MultiSelect,
-  Select,
-  Stack,
-  TextInput,
-} from "@mantine/core";
+import { Button, Group, Modal, Stack, TextInput } from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { TfiPlus } from "react-icons/tfi";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import { useCreateWorkout } from "../../hooks/workout/useCreateWorkout";
 import { User } from "../../hooks/useGetMe";
-import { useGetExercises } from "../../hooks/workout/useGetExercises";
+import { useCreateWorkout } from "../../hooks/workout/useCreateWorkout";
 
 const createWorkoutSchema = z.object({
   name: z.string(),
@@ -32,8 +23,6 @@ interface Props {
 
 function CreateWorkout(props: Props) {
   const [opened, { open, close }] = useDisclosure(false);
-  const exercisesQuery = useGetExercises();
-  const exercises = exercisesQuery.data ?? [];
 
   const { mutateAsync, isLoading } = useCreateWorkout();
   const form = useForm<CreateWorkoutSchema>({
@@ -81,18 +70,6 @@ function CreateWorkout(props: Props) {
                 type="text"
                 placeholder="Treino de peito, ombro e tríceps"
                 {...form.getInputProps("description")}
-              />
-              <MultiSelect
-                label="Exercícios"
-                placeholder="Selecione os exercícios"
-                data={exercises.map((exercise) => ({
-                  value: exercise.id.toString(),
-                  label: exercise.name,
-                }))}
-                required
-                maxDropdownHeight={200}
-                searchable
-                {...form.getInputProps("exercisesId")}
               />
 
               <Button color="green" type="submit" loading={isLoading}>

@@ -9,13 +9,14 @@ interface Workout {
 }
 
 export const useCreateWorkout = () => {
-  useQueryClient();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: Workout) => {
       await api.post("/workout", {
         ...data,
         exercisesId: data.exercisesId.map((id) => +id),
       });
+      queryClient.refetchQueries(["workouts"]);
     },
   });
 };

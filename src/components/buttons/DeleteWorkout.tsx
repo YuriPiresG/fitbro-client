@@ -1,7 +1,7 @@
 import { Button, Modal, Stack } from "@mantine/core";
 import { toast } from "react-toastify";
 import { User } from "../../hooks/useGetMe";
-import { Workout } from "../../hooks/useGetWorkouts";
+import { Workout } from "../../hooks/workout/useGetWorkouts";
 import { useDeleteWorkout } from "../../hooks/workout/useDeleteWorkout";
 
 interface Props {

@@ -4,18 +4,18 @@ import {
   Grid,
   Group,
   Image,
-  Skeleton,
-  Text,
   Menu,
+  Skeleton,
+  Text
 } from "@mantine/core";
+import { useState } from "react";
 import workoutLogo from "../assets/workoutLogo.svg";
 import { useGetMe } from "../hooks/useGetMe";
-import { Workout, useGetWorkouts } from "../hooks/useGetWorkouts";
+import { Workout, useGetWorkouts } from "../hooks/workout/useGetWorkouts";
 import GetWorkout from "./GetWorkout";
 import CreateWorkout from "./buttons/CreateWorkout";
-import UpdateWorkout from "./buttons/UpdateWorkout";
-import { useState } from "react";
 import DeleteWorkout from "./buttons/DeleteWorkout";
+import UpdateWorkout from "./buttons/UpdateWorkout";
 
 function Workouts() {
   const { data: workouts, isLoading } = useGetWorkouts();
@@ -26,6 +26,8 @@ function Workouts() {
   const [selectedWorkoutToUpdate, setSelectedWorkoutToUpdate] =
     useState<Workout | null>(null);
   const [selectedWorkoutToDelete, setSelectedWorkoutToDelete] =
+    useState<Workout | null>(null);
+  const [selectedWorkoutToView, setSelectedWorkoutToView] =
     useState<Workout | null>(null);
 
   return (
@@ -45,7 +47,7 @@ function Workouts() {
               padding="lg"
               radius="md"
               withBorder
-              style={{ width: "13rem" }}
+              style={{ width: "20rem", height: "16rem" }}
             >
               <Group position="apart" mt="md" mb="xs">
                 <Text weight={500}>{workout?.name}</Text>
@@ -56,7 +58,14 @@ function Workouts() {
               </Text>
               <br />
 
-              <Menu shadow="md" width={200}>
+              <Menu
+                position="right"
+                withArrow
+                arrowPosition="center"
+                transitionProps={{ transition: "rotate-right", duration: 150 }}
+                shadow="md"
+                width={150}
+              >
                 <Menu.Target>
                   <Button>Opções</Button>
                 </Menu.Target>
@@ -71,6 +80,13 @@ function Workouts() {
                     Editar
                   </Menu.Item>
                   <Menu.Item
+                    onClick={() => {
+                      setSelectedWorkoutToView(workout);
+                    }}
+                  >
+                    Ver treino
+                  </Menu.Item>
+                  <Menu.Item
                     style={{ color: "red" }}
                     onClick={() => {
                       setSelectedWorkoutToDelete(workout);
@@ -80,8 +96,6 @@ function Workouts() {
                   </Menu.Item>
                 </Menu.Dropdown>
               </Menu>
-
-              <GetWorkout user={user!} workout={workout} />
             </Card>
           ))}
         </Grid>
@@ -103,6 +117,16 @@ function Workouts() {
             setSelectedWorkoutToDelete(null);
           }}
           workout={selectedWorkoutToDelete as any}
+          user={user!}
+        />
+      )}
+      {selectedWorkoutToView && (
+        <GetWorkout
+          open={!!selectedWorkoutToView}
+          close={() => {
+            setSelectedWorkoutToView(null);
+          }}
+          workout={selectedWorkoutToView as any}
           user={user!}
         />
       )}
