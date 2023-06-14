@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Layout } from "./components/Layout";
 import HomeScreen from "./components/HomeScreen";
 import Workouts from "./components/Workouts";
+import Diets from "./components/Diets";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
     children: [
       { path: "home", element: <HomeScreen /> },
       { path: "workout", element: <Workouts /> },
+      { path: "diet", element: <Diets /> },
     ],
   },
 ]);

@@ -6,7 +6,7 @@ import {
   Image,
   Menu,
   Skeleton,
-  Text
+  Text,
 } from "@mantine/core";
 import { useState } from "react";
 import workoutLogo from "../assets/workoutLogo.svg";
@@ -33,10 +33,7 @@ function Workouts() {
   return (
     <>
       <div className="fade-in">
-        <div
-          
-          style={{ display: "flex", justifyContent: "space-between" }}
-        >
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h1 style={{ fontSize: 100, height: "0px" }}>Treinos</h1>
 
           <Image src={workoutLogo} alt="Logo" width={800} />
