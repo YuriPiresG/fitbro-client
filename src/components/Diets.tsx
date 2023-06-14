@@ -1,23 +1,20 @@
 import {
-  Button,
-  Grid,
-  Group,
-  Image,
-  Menu,
-  Skeleton,
-  Text,
   Accordion,
   AccordionControlProps,
   ActionIcon,
   Box,
+  Button,
   Divider,
+  Image,
+  Menu,
+  Skeleton,
 } from "@mantine/core";
-import { useState } from "react";
-import dietLogo from "../assets/dietLogo.svg";
-import { useGetMe } from "../hooks/useGetMe";
-import { Diet, useGetDiet } from "../hooks/diet/useGetDiet";
-IoSettingsOutline;
 import { IoSettingsOutline } from "react-icons/io5";
+import dietLogo from "../assets/dietLogo.svg";
+import { Diet, useGetDiet } from "../hooks/diet/useGetDiet";
+import { useGetMe } from "../hooks/useGetMe";
+import CreateDiet from "./buttons/CreateDiet";
+IoSettingsOutline;
 function Diets() {
   const { data: diets, isLoading } = useGetDiet();
   const user = useGetMe();
@@ -89,6 +86,7 @@ function Diets() {
           </h1>
         </div>
         <Skeleton visible={isLoading}>
+          <CreateDiet open={false} user={user!}/>
           <Accordion variant="separated" radius="xs" defaultValue="diet">
             {filteredDiets?.map((diet: Diet) => (
               <>
