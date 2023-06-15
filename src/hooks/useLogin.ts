@@ -20,7 +20,7 @@ export const useLogin = () => {
     mutationFn: async (data: Payload) => {
       const response = await api.post("/auth/login", data);
       const user: User = response.data.user;
-      console.log(user);
+
       localStorage.setItem("access_token", response.data.access_token);
       queryClient.setQueryData(["me"], user);
       toast.success("Login bem sucedido");

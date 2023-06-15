@@ -4,7 +4,7 @@ import { useGetMe } from "../hooks/useGetMe";
 
 function HomeScreen() {
   const user = useGetMe();
-  console.log(user);
+
   return (
     <div
       className="fade-in"

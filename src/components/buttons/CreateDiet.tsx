@@ -88,7 +88,7 @@ function CreateDiet(props: Props) {
       </Modal>
 
       <Group position="center">
-        <Button onClick={open} color="green">
+        <Button onClick={open} color="green" style={{marginRight:"auto"}}>
           Adicione uma receita
           <TfiPlus size={"1.3rem"} />
         </Button>
