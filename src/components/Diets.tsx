@@ -6,7 +6,7 @@ import {
   Image,
   Menu,
   Skeleton,
-  Text
+  Text,
 } from "@mantine/core";
 import { useState } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -15,6 +15,8 @@ import { Diet, useGetDiet } from "../hooks/diet/useGetDiet";
 import { useGetMe } from "../hooks/useGetMe";
 import GetDiet from "./GetDiet";
 import CreateDiet from "./buttons/CreateDiet";
+import DeleteDiet from "./buttons/DeleteDiet";
+import UpdateDiet from "./buttons/UpdateDiet";
 IoSettingsOutline;
 function Diets() {
   const { data: diets, isLoading } = useGetDiet();
@@ -92,7 +94,7 @@ function Diets() {
                     <Menu.Label>Selecione uma: </Menu.Label>
                     <Menu.Item
                       onClick={() => {
-                        alert();
+                        setSelectedDietToUpdate(diet);
                       }}
                     >
                       Editar
@@ -104,7 +106,12 @@ function Diets() {
                     >
                       Ver/Adicionar Ingredientes
                     </Menu.Item>
-                    <Menu.Item style={{ color: "red" }} onClick={() => {alert()}}>
+                    <Menu.Item
+                      style={{ color: "red" }}
+                      onClick={() => {
+                        setSelectedDietToDelete(diet);
+                      }}
+                    >
                       Deletar
                     </Menu.Item>
                   </Menu.Dropdown>
@@ -122,6 +129,24 @@ function Diets() {
             }}
             diet={selectedDietToView as Diet}
             user={user!}
+          />
+        )}
+        {selectedDietToDelete && (
+          <DeleteDiet
+            open={!!selectedDietToDelete}
+            close={() => {
+              setSelectedDietToDelete(null);
+            }}
+            diet={selectedDietToDelete as Diet}
+          />
+        )}
+        {selectedDietToUpdate && (
+          <UpdateDiet
+            open={!!selectedDietToUpdate}
+            close={() => {
+              setSelectedDietToUpdate(null);
+            }}
+            diet={selectedDietToUpdate as Diet}
           />
         )}
       </div>
