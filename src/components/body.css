@@ -1,0 +1,44 @@
+svg {
+  cursor: pointer;
+}
+
+#Calves {
+  fill: red;
+  opacity: 0.5;
+}
+#Chest {
+  fill: yellow;
+  opacity: 0.5;
+}
+#Shoulders {
+  fill: blue;
+  opacity: 0.5;
+}
+#Waist {
+  fill: green;
+  opacity: 0.5;
+}
+#Thighs {
+  fill: red;
+  opacity: 0.5;
+}
+#Biceps {
+  fill: green;
+  opacity: 0.5;
+}
+#Forearms {
+  fill: blue;
+  opacity: 0.5;
+}
+#Back {
+  fill: yellow;
+  opacity: 0.5;
+}
+#Hips {
+  fill: blue;
+  opacity: 0.5;
+}
+#Triceps {
+  fill: green;
+  opacity: 0.5;
+}
