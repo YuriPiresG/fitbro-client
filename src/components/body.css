@@ -1,44 +1,28 @@
-svg {
+#Calves path:hover,
+#Chest path:hover,
+#Shoulders path:hover,
+#Waist path:hover,
+#Thighs path:hover,
+#Biceps path:hover,
+#Forearms path:hover,
+#Back:hover,
+#Hips path:hover,
+#Triceps path:hover {
   cursor: pointer;
-}
-
-#Calves {
   fill: red;
   opacity: 0.5;
 }
-#Chest {
-  fill: yellow;
-  opacity: 0.5;
-}
-#Shoulders {
-  fill: blue;
-  opacity: 0.5;
-}
-#Waist {
-  fill: green;
-  opacity: 0.5;
-}
-#Thighs {
-  fill: red;
-  opacity: 0.5;
-}
-#Biceps {
-  fill: green;
-  opacity: 0.5;
-}
-#Forearms {
-  fill: blue;
-  opacity: 0.5;
-}
-#Back {
-  fill: yellow;
-  opacity: 0.5;
-}
-#Hips {
-  fill: blue;
-  opacity: 0.5;
-}
-#Triceps {
-  fill: green;
-  opacity: 0.5;
+#Calves path,
+#Chest path,
+#Shoulders path,
+#Waist path,
+#Thighs path,
+#Biceps path,
+#Forearms path,
+#Back,
+#Hips path,
+#Waist path,
+#Triceps path {
+  cursor: pointer;
+  opacity: 0;
 }

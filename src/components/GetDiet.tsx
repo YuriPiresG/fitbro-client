@@ -51,7 +51,7 @@ function GetDiet(props: Props) {
               </h1>
               <h3>Proteínas: {ingredient.protein}</h3>
               <h3>Calorias: {ingredient.calories}</h3>
-              <h3>Carboidrátos: {ingredient.carbs}</h3>
+              <h3>Carboidratos: {ingredient.carbs}</h3>
             </Text>
           ))}
           <CreateIngredient diet={props.diet} open />

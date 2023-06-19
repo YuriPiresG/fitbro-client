@@ -20,7 +20,7 @@ const router = createBrowserRouter([
       { path: "home", element: <HomeScreen /> },
       { path: "workout", element: <Workouts /> },
       { path: "diet", element: <Diets /> },
-      { path: "body", element: <Body /> },
+      { path: "measurements", element: <Body /> },
     ],
   },
 ]);
