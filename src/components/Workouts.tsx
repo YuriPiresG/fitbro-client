@@ -44,6 +44,7 @@ function Workouts() {
           <Grid justify="center">
             {filteredWorkouts?.map((workout: Workout) => (
               <Card
+                key={workout.id}
                 shadow="sm"
                 padding="lg"
                 radius="md"

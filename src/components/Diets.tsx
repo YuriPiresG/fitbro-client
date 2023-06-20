@@ -60,6 +60,7 @@ function Diets() {
           <Grid justify="center">
             {filteredDiets?.map((diet: Diet) => (
               <Card
+                key={diet.id}
                 shadow="sm"
                 padding="lg"
                 radius="md"

@@ -9,6 +9,7 @@ import HomeScreen from "./components/HomeScreen";
 import Workouts from "./components/Workouts";
 import Diets from "./components/Diets";
 import Body from "./components/Body";
+import Measurements from "./components/Measurements";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -20,7 +21,8 @@ const router = createBrowserRouter([
       { path: "home", element: <HomeScreen /> },
       { path: "workout", element: <Workouts /> },
       { path: "diet", element: <Diets /> },
-      { path: "measurements", element: <Body /> },
+      { path: "measurements", element: <Measurements /> },
+      { path: "body", element: <Body /> },
     ],
   },
 ]);
