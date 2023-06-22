@@ -33,7 +33,7 @@ function GetWorkout(props: Props) {
   const [exerciseToDelete, setExerciseToDelete] = useState<Exercise | null>(
     null
   );
-
+console.log(props.workout)
   return (
     <>
       <Drawer
@@ -48,7 +48,7 @@ function GetWorkout(props: Props) {
         }}
       >
         <Drawer.Body>
-          {props.workout.exercises.map((exercise: Exercise) => (
+          {props.workout.exercises?.map((exercise: Exercise) => (
             <Text
               key={exercise.id}
               td={isExerciseChecked(exercise.id) ? "line-through" : "none"}

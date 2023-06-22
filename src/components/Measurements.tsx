@@ -45,15 +45,16 @@ function Measurements() {
             Medidas
           </h1>
           <h3>
-            Esta área é dedicada ao acompanhamento de suas medidas corporais!{" "}
+            Esta área é dedicada ao acompanhamento de suas medidas corporais!
             <br />
-            Você poderá acompanhar seu progresso e visualizar seus resultados!{" "}
+            Você poderá acompanhar seu progresso e visualizar seus resultados!
             <br />
             Comece criando uma medida abaixo!
           </h3>
         </div>
       </div>
-      <Divider /><br />
+      <Divider />
+      <br />
       <CreateMeasurement user={user!} open={false} />
       <br />
       <Skeleton visible={isLoading}>
