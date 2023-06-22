@@ -1,12 +1,13 @@
 import {
   Button,
   Card,
+  Divider,
+  Grid,
   Group,
   Image,
   Menu,
-  Text,
   Skeleton,
-  Grid,
+  Text,
 } from "@mantine/core";
 import measurement from "../assets/measurement.svg";
 import {
@@ -15,12 +16,20 @@ import {
 } from "../hooks/measurements/useGetMeasurements";
 import { useGetMe } from "../hooks/useGetMe";
 import CreateMeasurement from "./buttons/CreateMeasurement";
+import { useState } from "react";
+import UpdateMeasurement from "./buttons/UpdateMeasurement";
 function Measurements() {
   const { data: measurements, isLoading } = useGetMeasurements();
   const user = useGetMe();
   const filteredMeasurements = measurements?.filter(
     (measurement: Measurement) => measurement.user.id === user?.id
   );
+  const [selectedMeasurementToUpdate, setSelectedMeasurementToUpdate] =
+    useState<Measurement | null>(null);
+  // const [selectedWorkoutToDelete, setSelectedWorkoutToDelete] =
+  //   useState<Workout | null>(null);
+  // const [selectedWorkoutToView, setSelectedWorkoutToView] =
+  //   useState<Workout | null>(null);
   return (
     <>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -44,7 +53,9 @@ function Measurements() {
           </h3>
         </div>
       </div>
+      <Divider /><br />
       <CreateMeasurement user={user!} open={false} />
+      <br />
       <Skeleton visible={isLoading}>
         <Grid justify="center">
           {filteredMeasurements?.map((measurement: Measurement) => (
@@ -54,14 +65,14 @@ function Measurements() {
               padding="lg"
               radius="md"
               withBorder
-              style={{ width: "20rem", height: "16rem" }}
+              style={{ width: "15rem", height: "auto" }}
             >
               <Group position="apart" mt="md" mb="xs">
-                <Text weight={500}>{measurement.date}</Text>
+                <Text weight={500}>Data: {measurement.date}</Text>
               </Group>
 
               <Text size="sm" color="dimmed">
-                {measurement?.user?.username}
+                Peso: {measurement?.weight}kg
               </Text>
               <br />
 
@@ -84,7 +95,7 @@ function Measurements() {
                   <Menu.Label>Selecione uma: </Menu.Label>
                   <Menu.Item
                     onClick={() => {
-                      alert("Editar");
+                      setSelectedMeasurementToUpdate(measurement);
                     }}
                   >
                     Editar
@@ -110,6 +121,16 @@ function Measurements() {
           ))}
         </Grid>
       </Skeleton>
+      {selectedMeasurementToUpdate && (
+        <UpdateMeasurement
+          open={!!selectedMeasurementToUpdate}
+          close={() => {
+            setSelectedMeasurementToUpdate(null);
+          }}
+          measurement={selectedMeasurementToUpdate as Measurement}
+          user={user!}
+        />
+      )}
     </>
   );
 }

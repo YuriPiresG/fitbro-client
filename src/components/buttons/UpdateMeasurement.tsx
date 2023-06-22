@@ -1,23 +1,14 @@
-import {
-  Button,
-  Group,
-  Modal,
-  NumberInput,
-  Stack
-} from "@mantine/core";
-
+import { Button, Modal, NumberInput, Stack } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useForm, zodResolver } from "@mantine/form";
-import { useDisclosure } from "@mantine/hooks";
-import { TfiPlus } from "react-icons/tfi";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import { useCreateMeasurement } from "../../hooks/measurements/useCreateMeasurement";
+import { Measurement } from "../../hooks/measurements/useGetMeasurements";
+import { useUpdateMeasurement } from "../../hooks/measurements/useUpdateMeasurement";
 import { User } from "../../hooks/useGetMe";
 
-const createMeasurementSchema = z.object({
+const updateMeasurementSchema = z.object({
   date: z.string().or(z.date()),
-  userId: z.number(),
   weight: z.number(),
   height: z.number(),
   bodyFat: z.number(),
@@ -36,43 +27,43 @@ const createMeasurementSchema = z.object({
   shoulders: z.number(),
 });
 
-type CreateMeasurementSchema = z.infer<typeof createMeasurementSchema>;
+type UpdateMeasurementSchema = z.infer<typeof updateMeasurementSchema>;
 
 interface Props {
+  measurement: Measurement;
   user: User;
   open: boolean;
+  close: () => void;
 }
 
-function CreateMeasurement(props: Props) {
-  const [opened, { open, close }] = useDisclosure(false);
-
-  const { mutateAsync, isLoading } = useCreateMeasurement();
-  const form = useForm<CreateMeasurementSchema>({
+function UpdateMeasurement(props: Props) {
+  const { mutateAsync, isLoading } = useUpdateMeasurement();
+  const form = useForm<UpdateMeasurementSchema>({
     initialValues: {
-      date: new Date(),
-      userId: props.user?.id,
-      weight: 0,
-      height: 0,
-      bodyFat: 0,
-      armL: 0,
-      armR: 0,
-      forearmL: 0,
-      forearmR: 0,
-      chest: 0,
-      waist: 0,
-      hips: 0,
-      thighL: 0,
-      thighR: 0,
-      calfL: 0,
-      calfR: 0,
-      back: 0,
-      shoulders: 0,
+      date: "",
+      weight: props.measurement.weight,
+      height: props.measurement.height,
+      bodyFat: props.measurement.bodyFat,
+      armL: props.measurement.armL,
+      armR: props.measurement.armR,
+      forearmL: props.measurement.forearmL,
+      forearmR: props.measurement.forearmR,
+      chest: props.measurement.chest,
+      waist: props.measurement.waist,
+      hips: props.measurement.hips,
+      thighL: props.measurement.thighL,
+      thighR: props.measurement.thighR,
+      calfL: props.measurement.calfL,
+      calfR: props.measurement.calfR,
+      back: props.measurement.back,
+      shoulders: props.measurement.shoulders,
     },
-    validate: zodResolver(createMeasurementSchema),
+    validate: zodResolver(updateMeasurementSchema),
   });
-  const handleSubmit = async (measurementForm: CreateMeasurementSchema) => {
+
+  const handleSubmit = async (measurementForm: UpdateMeasurementSchema) => {
     const formValues = {
-      userId: measurementForm.userId,
+      id: props.measurement.id,
       date: measurementForm.date,
       weight: measurementForm.weight,
       height: measurementForm.height,
@@ -91,24 +82,26 @@ function CreateMeasurement(props: Props) {
       back: measurementForm.back,
       shoulders: measurementForm.shoulders,
     };
-    console.log("Form submitted with values:", formValues);
     await mutateAsync(formValues);
-    toast.success("Medida adicionada com sucesso!");
+    toast.success("Medidas atualizadas com sucesso!");
     handleClose();
   };
-
-  const handleClose = () => {
+  function handleClose() {
+    props.close();
     form.reset();
-    close();
-  };
+  }
 
   return (
     <>
-      <Modal opened={opened} onClose={handleClose} title="Adicionar medidas">
+      <Modal
+        opened={props.open}
+        onClose={handleClose}
+        title="Atualizar medidas"
+      >
         <Modal.Body>
           <form
-            onSubmit={form.onSubmit((exerciseForm) =>
-              handleSubmit(exerciseForm)
+            onSubmit={form.onSubmit((measurementForm) =>
+              handleSubmit(measurementForm)
             )}
           >
             <DateInput
@@ -234,19 +227,13 @@ function CreateMeasurement(props: Props) {
             />
             <Stack spacing="xs">
               <Button color="green" type="submit" loading={isLoading}>
-                Criar
+                Atualizar
               </Button>
             </Stack>
           </form>
         </Modal.Body>
       </Modal>
-
-      <Group position="center">
-        <Button onClick={open} color="green">
-          <TfiPlus size={30} />
-        </Button>
-      </Group>
     </>
   );
 }
-export default CreateMeasurement;
+export default UpdateMeasurement;

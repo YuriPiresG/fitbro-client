@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "../../lib/api";
+import { formatDate } from "./useCreateMeasurement";
 
-interface CreateMeasurement {
+interface UpdateMeasurement {
+  id: number;
   date: string | Date;
-  userId: number;
   weight: number;
   height: number;
   bodyFat: number;
@@ -21,24 +22,16 @@ interface CreateMeasurement {
   back: number;
   shoulders: number;
 }
-export const formatDate = (date: string | number | Date) => {
-  const d = new Date(date);
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-};
 
-
-export const useCreateMeasurement = () => {
+export function useUpdateMeasurement() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (data: CreateMeasurement) => {
-      await api.post("/measurements", {
+    mutationFn: async (data: UpdateMeasurement) => {
+      await api.put(`/measurements/${data.id}`, {
         ...data,
         date: formatDate(data.date),
       });
       queryClient.refetchQueries(["measurements"]);
     },
   });
-};
+}
